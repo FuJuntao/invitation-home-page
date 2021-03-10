@@ -1,13 +1,17 @@
 /** @jsx jsx */
+import { Flex } from '@chakra-ui/layout';
 import { jsx } from '@emotion/react';
-import { Box, Heading, Text } from '@chakra-ui/layout';
-import React from 'react';
+import Footer from '../Footer';
+import Header from '../Header';
+import Main from '../Main';
 
 function HomePageIndex() {
   return (
-    <Box>
-      <Heading as="h1">A better way to enjoy every day.</Heading>
-    </Box>
+    <Flex h="100%" flexDirection="column">
+      <Header />
+      <Main />
+      <Footer />
+    </Flex>
   );
 }
 
