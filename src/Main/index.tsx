@@ -20,7 +20,7 @@ function Main() {
       </Heading>
       <Button onClick={onOpen}>Request an invite</Button>
 
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal isCentered isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <InvitationForm />
       </Modal>
