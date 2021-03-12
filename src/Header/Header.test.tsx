@@ -7,6 +7,6 @@ import Header from './Header';
 describe('<Header/>', () => {
   it('renders company name', () => {
     render(<Header />);
-    expect(screen.getAllByText(companyName)).not.null;
+    screen.getByText(companyName);
   });
 });

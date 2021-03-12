@@ -1,16 +1,15 @@
 import { render, screen } from '@testing-library/react';
-import { expect } from 'chai';
 import React from 'react';
 import Footer from './Footer';
 
 describe('<Footer/>', () => {
   it('renders created place', () => {
     render(<Footer />);
-    expect(screen.getAllByText(/Shanghai/)).not.null;
+    screen.getByText(/Shanghai/);
   });
 
   it('renders rights', () => {
     render(<Footer />);
-    expect(screen.getAllByText(/All rights reserved/)).not.null;
+    screen.getByText(/All rights reserved/);
   });
 });

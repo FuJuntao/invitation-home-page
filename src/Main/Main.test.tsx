@@ -13,12 +13,15 @@ describe('<Main/>', () => {
   render(<Main />);
 
   it('renders slogan', () => {
-    expect(screen.getByText(slogan)).not.null;
+    screen.getByText(slogan);
   });
 
-  const requestInviteButton = screen.getByText('Request an invite');
-
   it('renders request an invite button', () => {
-    expect(requestInviteButton).not.null;
+    screen.getByText('Request an invite');
+  });
+
+  it('opens a modal when request an invite button is clicked', () => {
+    fireEvent.click(screen.getByText('Request an invite'));
+    screen.getByRole(/dialog/);
   });
 });
