@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { Button } from '@chakra-ui/button';
 import { Input } from '@chakra-ui/input';
-import { VStack } from '@chakra-ui/layout';
+import { Text, VStack } from '@chakra-ui/layout';
 import {
   ModalBody,
   ModalCloseButton,
@@ -9,19 +9,28 @@ import {
   ModalFooter,
   ModalHeader,
 } from '@chakra-ui/modal';
+import { ScaleFade } from '@chakra-ui/transition';
 import { jsx } from '@emotion/react';
+import axios, { AxiosError } from 'axios';
 import { Form, FormikProvider, useFormik } from 'formik';
+import { useState } from 'react';
 import * as yup from 'yup';
+import { useAxios } from '../axios';
 import FormikFormControl from './FormikInput';
 
+interface RequestData {
+  name: string;
+  email: string;
+}
+
 const initialValues = {
-  fullName: '',
+  name: '',
   email: '',
   confirmEmail: '',
 };
 
 const validationSchema = yup.object({
-  fullName: yup.string().label('Full name').required(),
+  name: yup.string().label('Full name').required(),
   email: yup.string().email().label('Email').required(),
   confirmEmail: yup
     .string()
@@ -36,7 +45,26 @@ const validationSchema = yup.object({
 });
 
 function InvitationForm() {
-  const onSubmit = () => {};
+  const axiosInstance = useAxios();
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const onSubmit = async (values: typeof initialValues) => {
+    try {
+      setErrorMessage('');
+      const requestData: RequestData = {
+        name: values.name,
+        email: values.email,
+      };
+      await axiosInstance.post<string>('fake-auth', requestData);
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        const axiosError: AxiosError<{ errorMessage: string }> = error;
+        setErrorMessage(
+          axiosError.response?.data?.errorMessage ?? axiosError.message,
+        );
+      }
+    }
+  };
 
   const formik = useFormik({ initialValues, validationSchema, onSubmit });
 
@@ -49,7 +77,7 @@ function InvitationForm() {
         <Form>
           <ModalBody>
             <VStack spacing={4}>
-              <FormikFormControl id="fullName" label="Full name">
+              <FormikFormControl id="name" label="Full name">
                 {(fieldProps) => (
                   <Input {...fieldProps} placeholder="Full name" />
                 )}
@@ -71,10 +99,21 @@ function InvitationForm() {
                 )}
               </FormikFormControl>
             </VStack>
+
+            <ScaleFade in={!!errorMessage}>
+              <Text mt={4} color="red" textAlign="center">
+                {errorMessage}
+              </Text>
+            </ScaleFade>
           </ModalBody>
 
-          <ModalFooter mt={4} justifyContent="center">
-            <Button size="lg" width="full" type="submit">
+          <ModalFooter justifyContent="center">
+            <Button
+              size="lg"
+              width="full"
+              type="submit"
+              isLoading={formik.isSubmitting}
+            >
               Send
             </Button>
           </ModalFooter>
