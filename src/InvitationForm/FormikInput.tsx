@@ -3,7 +3,6 @@ import {
   FormControl,
   FormControlProps,
   FormErrorMessage,
-  FormHelperText,
   FormLabel,
 } from '@chakra-ui/form-control';
 import { Collapse } from '@chakra-ui/transition';
@@ -21,14 +20,14 @@ export default function FormikFormControl<FieldValue = any>(
   props: FormikFormControlProps<FieldValue>,
 ) {
   const { id, label, children: renderChildren, ...otherProps } = props;
-
   const [childrenProps, { error, touched }] = useField<FieldValue>(id);
+  const isInvalid = touched && !!error;
 
   return (
-    <FormControl id={id} isInvalid={touched && !!error} {...otherProps}>
+    <FormControl id={id} isInvalid={isInvalid} {...otherProps}>
       <FormLabel>{label}</FormLabel>
       {renderChildren(childrenProps)}
-      <Collapse in={!!error}>
+      <Collapse in={isInvalid}>
         <FormErrorMessage>{error}</FormErrorMessage>
       </Collapse>
     </FormControl>
