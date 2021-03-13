@@ -1,12 +1,15 @@
-import React from 'react';
 import { ChakraProvider } from '@chakra-ui/react';
+import React from 'react';
+import { AxiosProvider } from './axios';
 import HomePageIndex from './HomePage';
 import theme from './theme';
 
 function App() {
   return (
     <ChakraProvider theme={theme}>
-      <HomePageIndex />
+      <AxiosProvider>
+        <HomePageIndex />
+      </AxiosProvider>
     </ChakraProvider>
   );
 }
