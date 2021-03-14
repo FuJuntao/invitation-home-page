@@ -1,4 +1,3 @@
-/** @jsx jsx */
 import {
   FormControl,
   FormControlProps,
@@ -6,9 +5,8 @@ import {
   FormLabel,
 } from '@chakra-ui/form-control';
 import { Collapse } from '@chakra-ui/transition';
-import { jsx } from '@emotion/react';
 import { FieldInputProps, useField } from 'formik';
-import type { ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 
 type FormikFormControlProps<FieldValue> = FormControlProps & {
   id: string;

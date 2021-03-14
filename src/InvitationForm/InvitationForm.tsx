@@ -44,7 +44,12 @@ const validationSchema = yup.object({
     ),
 });
 
-function InvitationForm() {
+type InvitationFormProps = {
+  onSucceeded: () => void;
+};
+
+function InvitationForm(props: InvitationFormProps) {
+  const { onSucceeded } = props;
   const axiosInstance = useAxios();
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -56,6 +61,7 @@ function InvitationForm() {
         email: values.email,
       };
       await axiosInstance.post<string>('fake-auth', requestData);
+      onSucceeded();
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
         const axiosError: AxiosError<{ errorMessage: string }> = error;

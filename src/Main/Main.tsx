@@ -1,10 +1,8 @@
-/** @jsx jsx */
 import { Button } from '@chakra-ui/button';
 import { useDisclosure } from '@chakra-ui/hooks';
 import { Center, Heading } from '@chakra-ui/layout';
-import { Modal, ModalOverlay } from '@chakra-ui/modal';
-import { jsx } from '@emotion/react';
-import InvitationForm from '../InvitationForm';
+import React from 'react';
+import InvitationFormModal from '../InvitationForm/InvitationFormModal';
 import { slogan } from '../shared/texts';
 
 function Main() {
@@ -20,10 +18,7 @@ function Main() {
       </Heading>
       <Button onClick={onOpen}>Request an invite</Button>
 
-      <Modal isCentered isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <InvitationForm />
-      </Modal>
+      <InvitationFormModal isCentered isOpen={isOpen} onClose={onClose} />
     </Center>
   );
 }

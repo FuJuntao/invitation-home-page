@@ -1,6 +1,5 @@
-/** @jsx jsx */
 import { Box, Heading } from '@chakra-ui/react';
-import { jsx } from '@emotion/react';
+import React from 'react';
 import { companyName } from '../shared/texts';
 
 function Footer() {

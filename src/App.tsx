@@ -1,5 +1,6 @@
+/** @jsx jsx */
 import { ChakraProvider } from '@chakra-ui/react';
-import React from 'react';
+import { jsx } from '@emotion/react';
 import { AxiosProvider } from './axios';
 import HomePageIndex from './HomePage';
 import theme from './theme';
