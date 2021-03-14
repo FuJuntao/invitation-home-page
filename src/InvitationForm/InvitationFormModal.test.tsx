@@ -1,3 +1,4 @@
+import { useDisclosure } from '@chakra-ui/hooks';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
@@ -5,7 +6,8 @@ import { renderWrappedWithProviders as render } from '../test-utils';
 import InvitationFormModal from './InvitationFormModal';
 
 const OpenedInvitationFormModal = () => {
-  return <InvitationFormModal isOpen onClose={() => {}} />;
+  const { isOpen, onClose } = useDisclosure({ defaultIsOpen: true });
+  return <InvitationFormModal isOpen={isOpen} onClose={onClose} />;
 };
 
 describe('<InvitationForm/>', () => {
