@@ -1,1 +1,1 @@
-export { AxiosProvider, useAxios } from './axiosContext';
+export { axiosInitialConfig, AxiosProvider, useAxios } from './axiosContext';
