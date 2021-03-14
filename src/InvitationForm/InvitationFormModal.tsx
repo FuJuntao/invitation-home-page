@@ -4,7 +4,6 @@ import { Heading } from '@chakra-ui/layout';
 import {
   Modal,
   ModalBody,
-  ModalCloseButton,
   ModalContent,
   ModalFooter,
   ModalHeader,
