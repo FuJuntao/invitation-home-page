@@ -5,7 +5,7 @@ import userEvent from '@testing-library/user-event';
 import { Form, FormikProvider, useFormik } from 'formik';
 import React, { useMemo } from 'react';
 import * as yup from 'yup';
-import FormikFormControl from './FormikInput';
+import FormikFormControl from './FormikFormControl';
 
 interface Values {
   email: string;
@@ -38,7 +38,7 @@ const FormikForm = () => {
   );
 };
 
-describe('<Main/>', () => {
+describe('<FormikFormControl/>', () => {
   it('renders label', () => {
     render(<FormikForm />);
     screen.getByLabelText('Email');

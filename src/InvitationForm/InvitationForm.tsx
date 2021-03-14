@@ -16,7 +16,7 @@ import { Form, FormikProvider, useFormik } from 'formik';
 import { useState } from 'react';
 import * as yup from 'yup';
 import { useAxios } from '../axios';
-import FormikFormControl from './FormikInput';
+import FormikFormControl from '../FormikFormControl';
 
 interface RequestData {
   name: string;
