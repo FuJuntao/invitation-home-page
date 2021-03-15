@@ -1,9 +1,39 @@
 import { useDisclosure } from '@chakra-ui/hooks';
-import { screen, waitFor } from '@testing-library/react';
+import {
+  screen,
+  waitFor,
+  waitForElementToBeRemoved,
+} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { rest } from 'msw';
+import { setupServer } from 'msw/node';
 import React from 'react';
 import { renderWrappedWithProviders as render } from '../test-utils';
 import InvitationFormModal from './InvitationFormModal';
+
+const usedEmail = 'usedemail@airwallex.com';
+
+const server = setupServer(
+  rest.post('/fake-auth', (req, res, ctx) => {
+    const { email } = req.params;
+    if (email === usedEmail) {
+      return res(
+        ctx.status(400),
+        ctx.body(
+          JSON.stringify({
+            errorMessage: 'Bad Request: Email is already in use',
+          }),
+        ),
+      );
+    } else {
+      return res(ctx.status(200), ctx.body('Registered'));
+    }
+  }),
+);
+
+beforeAll(() => server.listen());
+afterEach(() => server.resetHandlers());
+afterAll(() => server.close());
 
 const OpenedInvitationFormModal = () => {
   const { isOpen, onClose } = useDisclosure({ defaultIsOpen: true });
@@ -11,15 +41,18 @@ const OpenedInvitationFormModal = () => {
 };
 
 describe('<InvitationForm/>', () => {
-  it('renders error message when name input is not filled', async () => {
+  it('validates name input', async () => {
     render(<OpenedInvitationFormModal />);
-    userEvent.click(screen.getByRole('button', { name: 'Send' }));
 
-    await waitFor(() => {
-      expect(screen.getByLabelText('Full name')).toHaveAttribute(
-        'aria-invalid',
-      );
-    });
+    userEvent.click(screen.getByRole('button', { name: 'Send' }));
+    expect(await screen.findByLabelText('Full name')).toHaveAttribute(
+      'aria-invalid',
+    );
+
+    userEvent.type(screen.getByLabelText('Full name'), 'hello');
+    expect(await screen.findByLabelText('Full name')).not.toHaveAttribute(
+      'aria-invalid',
+    );
   });
 
   it('renders error message when email is not filled', async () => {
@@ -75,5 +108,52 @@ describe('<InvitationForm/>', () => {
         'aria-invalid',
       );
     });
+  });
+
+  it('handles error from server', async () => {
+    render(<OpenedInvitationFormModal />);
+
+    userEvent.type(screen.getByLabelText('Full name'), 'hello');
+    userEvent.type(screen.getByLabelText('Email'), usedEmail);
+    userEvent.type(screen.getByLabelText('Confirm Email'), usedEmail);
+    userEvent.click(screen.getByRole('button', { name: 'Send' }));
+
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: /.*Send/ })).toHaveAttribute(
+        'data-loading',
+      );
+    });
+
+    // not empty string
+    expect(await screen.findByRole('alert')).toHaveTextContent(/^\s]*/);
+  });
+
+  it('renders success dialog when request is successful', async () => {
+    render(<OpenedInvitationFormModal />);
+
+    userEvent.type(screen.getByLabelText('Full name'), 'hello');
+    userEvent.type(screen.getByLabelText('Email'), 'a@b.com');
+    userEvent.type(screen.getByLabelText('Confirm Email'), 'a@b.com');
+    userEvent.click(screen.getByRole('button', { name: 'Send' }));
+
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: /.*Send/ })).toHaveAttribute(
+        'data-loading',
+      );
+    });
+
+    await waitForElementToBeRemoved(
+      screen.getByRole('dialog', { name: 'Request an invite' }),
+    );
+
+    expect(
+      await screen.findByRole('dialog', { name: 'All Done' }),
+    ).toBeInTheDocument();
+
+    userEvent.click(screen.getByRole('button', { name: 'Ok' }));
+
+    await waitForElementToBeRemoved(
+      screen.getByRole('dialog', { name: 'All Done' }),
+    );
   });
 });

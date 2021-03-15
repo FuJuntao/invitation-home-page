@@ -58,7 +58,7 @@ function InvitationForm(props: InvitationFormProps) {
         name: values.name,
         email: values.email,
       };
-      await axiosInstance.post<string>('fake-auth', requestData);
+      await axiosInstance.post<string>('/fake-auth', requestData);
       onSucceeded();
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
@@ -105,7 +105,7 @@ function InvitationForm(props: InvitationFormProps) {
             </VStack>
 
             <ScaleFade in={!!errorMessage}>
-              <Text mt={4} color="red" textAlign="center">
+              <Text mt={4} color="red" textAlign="center" role="alert">
                 {errorMessage}
               </Text>
             </ScaleFade>
