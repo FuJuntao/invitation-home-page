@@ -83,13 +83,22 @@ function InvitationForm(props: InvitationFormProps) {
             <VStack spacing={4}>
               <FormikFormControl id="name" label="Full name">
                 {(fieldProps) => (
-                  <Input {...fieldProps} placeholder="Full name" />
+                  <Input
+                    {...fieldProps}
+                    focusBorderColor="teal.500"
+                    placeholder="Full name"
+                  />
                 )}
               </FormikFormControl>
 
               <FormikFormControl id="email" label="Email">
                 {(fieldProps) => (
-                  <Input {...fieldProps} type="email" placeholder="Email" />
+                  <Input
+                    {...fieldProps}
+                    focusBorderColor="teal.500"
+                    type="email"
+                    placeholder="Email"
+                  />
                 )}
               </FormikFormControl>
 
@@ -97,29 +106,31 @@ function InvitationForm(props: InvitationFormProps) {
                 {(fieldProps) => (
                   <Input
                     {...fieldProps}
+                    focusBorderColor="teal.500"
                     type="email"
                     placeholder="Confirm Email"
                   />
                 )}
               </FormikFormControl>
             </VStack>
-
-            <ScaleFade in={!!errorMessage}>
-              <Text mt={4} color="red" textAlign="center" role="alert">
-                {errorMessage}
-              </Text>
-            </ScaleFade>
           </ModalBody>
 
-          <ModalFooter justifyContent="center">
+          <ModalFooter flexDirection="column" py="8">
             <Button
               size="lg"
               width="full"
+              colorScheme="teal"
               type="submit"
               isLoading={formik.isSubmitting}
             >
               Send
             </Button>
+
+            <ScaleFade unmountOnExit in={!!errorMessage}>
+              <Text mt={4} color="red" textAlign="center" role="alert">
+                {errorMessage}
+              </Text>
+            </ScaleFade>
           </ModalFooter>
         </Form>
       </FormikProvider>
