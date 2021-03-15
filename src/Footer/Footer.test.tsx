@@ -5,11 +5,11 @@ import Footer from './Footer';
 describe('<Footer/>', () => {
   it('renders created place', () => {
     render(<Footer />);
-    screen.getByRole('heading', { name: /Shanghai/ });
+    screen.getByRole('heading', { name: /shanghai/i });
   });
 
   it('renders rights', () => {
     render(<Footer />);
-    screen.getByRole('heading', { name: /All rights reserved/ });
+    screen.getByRole('heading', { name: /all rights reserved/i });
   });
 });
