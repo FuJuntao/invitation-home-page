@@ -147,10 +147,10 @@ describe('<InvitationForm/>', () => {
     await waitForElementToBeRemoved(requestAnInviteModal);
 
     const successDialog = await screen.findByRole('dialog', {
-      name: 'All Done',
+      name: /all done/i,
     });
     expect(successDialog).toBeInTheDocument();
-    userEvent.click(screen.getByRole('button', { name: 'Ok' }));
+    userEvent.click(screen.getByRole('button', { name: /ok/i }));
     await waitForElementToBeRemoved(successDialog);
   });
 });

@@ -1,5 +1,5 @@
 import { Button } from '@chakra-ui/button';
-import { Heading } from '@chakra-ui/layout';
+import { useBreakpointValue } from '@chakra-ui/media-query';
 import {
   Modal,
   ModalBody,
@@ -16,22 +16,24 @@ type RegisterSuccessModalProps = Omit<ModalProps, 'children'>;
 
 export default function RegisterSuccessModal(props: RegisterSuccessModalProps) {
   const { onClose, ...otherProps } = props;
+  const size = useBreakpointValue({ base: 'xs', sm: 'md' });
 
   return (
-    <Modal isCentered onClose={onClose} {...otherProps}>
+    <Modal isCentered onClose={onClose} size={size} {...otherProps}>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>All Done</ModalHeader>
-        <ModalBody>
-          <Heading>
-            You will be one of the first to experience {companyName} when we
-            launch
-          </Heading>
+        <ModalHeader textAlign="center" fontSize="3xl" color="teal.500">
+          All done!
+        </ModalHeader>
+
+        <ModalBody textAlign="center" fontSize="lg" my="4">
+          You will be one of the first to experience {companyName} when we
+          launch
         </ModalBody>
 
         <ModalFooter>
           <Button w="full" colorScheme="teal" onClick={onClose}>
-            Ok
+            OK
           </Button>
         </ModalFooter>
       </ModalContent>

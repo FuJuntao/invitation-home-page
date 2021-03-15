@@ -1,4 +1,5 @@
 import { useDisclosure } from '@chakra-ui/hooks';
+import { useBreakpointValue } from '@chakra-ui/media-query';
 import { Modal, ModalOverlay, ModalProps } from '@chakra-ui/modal';
 import React from 'react';
 import InvitationForm from './InvitationForm';
@@ -13,10 +14,11 @@ export default function InvitationFormModal(props: InvitationFormModalProps) {
     onOpen: onSuccessDialogOpen,
     onClose: onSuccessDialogClose,
   } = useDisclosure();
+  const size = useBreakpointValue({ base: 'xs', sm: 'md' });
 
   return (
     <>
-      <Modal isCentered onClose={onClose} {...otherProps}>
+      <Modal isCentered onClose={onClose} size={size} {...otherProps}>
         <ModalOverlay />
         <InvitationForm
           onSucceeded={() => {
