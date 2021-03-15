@@ -6,6 +6,8 @@ import Header from './Header';
 describe('<Header/>', () => {
   it('renders company name', () => {
     render(<Header />);
-    screen.getByRole('heading', { name: companyName });
+    expect(screen.getByRole('banner')).toContainElement(
+      screen.getByRole('heading', { name: companyName }),
+    );
   });
 });

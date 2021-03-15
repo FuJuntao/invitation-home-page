@@ -4,8 +4,8 @@ import { companyName } from '../shared/texts';
 
 function Header() {
   return (
-    <Box as="header">
-      <Heading as="h2" size="sm">
+    <Box as="header" mx="4" py="4" borderBottom="1px" borderColor="gray.200">
+      <Heading as="h2" size="md" color="twitter.500">
         {companyName}
       </Heading>
     </Box>
