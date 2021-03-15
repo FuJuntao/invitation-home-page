@@ -1,4 +1,3 @@
-/** @jsx jsx */
 import { Button } from '@chakra-ui/button';
 import { Input } from '@chakra-ui/input';
 import { Text, VStack } from '@chakra-ui/layout';
@@ -10,10 +9,9 @@ import {
   ModalHeader,
 } from '@chakra-ui/modal';
 import { ScaleFade } from '@chakra-ui/transition';
-import { jsx } from '@emotion/react';
 import axios, { AxiosError } from 'axios';
 import { Form, FormikProvider, useFormik } from 'formik';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import * as yup from 'yup';
 import { useAxios } from '../axios';
 import FormikFormControl from '../FormikFormControl';
