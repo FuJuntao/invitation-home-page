@@ -14,8 +14,8 @@ import InvitationFormModal from './InvitationFormModal';
 const usedEmail = 'usedemail@airwallex.com';
 
 const server = setupServer(
-  rest.post('/fake-auth', (req, res, ctx) => {
-    const { email } = req.params;
+  rest.post<{ name: string; email: string }>('/fake-auth', (req, res, ctx) => {
+    const email = req.body?.email;
     if (email === usedEmail) {
       return res(
         ctx.status(400),
@@ -124,8 +124,7 @@ describe('<InvitationForm/>', () => {
       );
     });
 
-    // not empty string
-    expect(await screen.findByRole('alert')).toHaveTextContent(/^\s]*/);
+    expect(await screen.findByRole('alert')).not.toBeEmptyDOMElement();
   });
 
   it('renders success dialog when request is successful', async () => {
@@ -142,18 +141,16 @@ describe('<InvitationForm/>', () => {
       );
     });
 
-    await waitForElementToBeRemoved(
-      screen.getByRole('dialog', { name: 'Request an invite' }),
-    );
+    const requestAnInviteModal = screen.getByRole('dialog', {
+      name: 'Request an invite',
+    });
+    await waitForElementToBeRemoved(requestAnInviteModal);
 
-    expect(
-      await screen.findByRole('dialog', { name: 'All Done' }),
-    ).toBeInTheDocument();
-
+    const successDialog = await screen.findByRole('dialog', {
+      name: 'All Done',
+    });
+    expect(successDialog).toBeInTheDocument();
     userEvent.click(screen.getByRole('button', { name: 'Ok' }));
-
-    await waitForElementToBeRemoved(
-      screen.getByRole('dialog', { name: 'All Done' }),
-    );
+    await waitForElementToBeRemoved(successDialog);
   });
 });
