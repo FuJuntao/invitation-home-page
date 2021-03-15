@@ -2,7 +2,7 @@ import { Button } from '@chakra-ui/button';
 import { useDisclosure } from '@chakra-ui/hooks';
 import { Center, Heading } from '@chakra-ui/layout';
 import React from 'react';
-import InvitationFormModal from '../InvitationForm/InvitationFormModal';
+import InvitationFormModal from '../InvitationFormModal';
 import { slogan } from '../shared/texts';
 
 function Main() {
