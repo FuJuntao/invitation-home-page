@@ -1,7 +1,7 @@
 import axios, { AxiosInstance } from 'axios';
-import React, { createContext, ReactNode, useContext, useMemo } from 'react';
+import React, { createContext, ReactNode, useMemo } from 'react';
 
-const axiosContext = createContext<AxiosInstance | null>(null);
+export const axiosContext = createContext<AxiosInstance | null>(null);
 
 type AxiosProviderProps = {
   value?: AxiosInstance;
@@ -22,10 +22,4 @@ export const AxiosProvider = (props: AxiosProviderProps) => {
       {children}
     </axiosContext.Provider>
   );
-};
-
-export const useAxios = () => {
-  const axiosInstance = useContext(axiosContext);
-  if (!axiosInstance) throw new Error('No axios instance found');
-  return axiosInstance;
 };
