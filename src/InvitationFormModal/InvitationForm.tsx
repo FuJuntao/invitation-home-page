@@ -28,7 +28,7 @@ const initialValues = {
 };
 
 const validationSchema = yup.object({
-  name: yup.string().label('Full name').required(),
+  name: yup.string().label('Full name').required().min(3),
   email: yup.string().email().label('Email').required(),
   confirmEmail: yup
     .string()

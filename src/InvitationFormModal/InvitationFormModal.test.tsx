@@ -41,18 +41,27 @@ const OpenedInvitationFormModal = () => {
 };
 
 describe('<InvitationForm/>', () => {
-  it('validates name input', async () => {
+  it('renders error message when full name is not filled', async () => {
     render(<OpenedInvitationFormModal />);
-
     userEvent.click(screen.getByRole('button', { name: 'Send' }));
-    expect(await screen.findByLabelText('Full name')).toHaveAttribute(
-      'aria-invalid',
-    );
 
-    userEvent.type(screen.getByLabelText('Full name'), 'hello');
-    expect(await screen.findByLabelText('Full name')).not.toHaveAttribute(
-      'aria-invalid',
-    );
+    await waitFor(() => {
+      expect(screen.getByLabelText('Full name')).toHaveAttribute(
+        'aria-invalid',
+      );
+    });
+  });
+
+  it('renders error message when full name is less than 3 letters', async () => {
+    render(<OpenedInvitationFormModal />);
+    userEvent.type(screen.getByLabelText('Full name'), 'he');
+    userEvent.click(screen.getByRole('button', { name: 'Send' }));
+
+    await waitFor(() => {
+      expect(screen.getByLabelText('Full name')).toHaveAttribute(
+        'aria-invalid',
+      );
+    });
   });
 
   it('renders error message when email is not filled', async () => {
