@@ -16,4 +16,4 @@ const renderWrappedWithProviders = (
   options?: Omit<RenderOptions, 'queries'>,
 ) => render(ui, { wrapper: AppProviders, ...options });
 
-export { AppProviders, renderWrappedWithProviders };
+export { AppProviders, renderWrappedWithProviders as render };

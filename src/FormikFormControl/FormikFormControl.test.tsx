@@ -1,10 +1,11 @@
 import { Button } from '@chakra-ui/button';
 import { Input } from '@chakra-ui/input';
-import { render, screen, waitFor } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Form, FormikProvider, useFormik } from 'formik';
 import React, { useMemo } from 'react';
 import * as yup from 'yup';
+import { render } from '../test-utils';
 import FormikFormControl from './FormikFormControl';
 
 interface Values {

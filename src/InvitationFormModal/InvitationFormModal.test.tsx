@@ -8,7 +8,7 @@ import userEvent from '@testing-library/user-event';
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
 import React from 'react';
-import { renderWrappedWithProviders as render } from '../test-utils';
+import { render as render } from '../test-utils';
 import InvitationFormModal from './InvitationFormModal';
 
 const usedEmail = 'usedemail@airwallex.com';

@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { render } from '@testing-library/react';
 import App from './App';
 import { slogan } from './shared/texts';
+import { render } from './test-utils';
 
 describe('<App>', () => {
   it('renders slogan', () => {
